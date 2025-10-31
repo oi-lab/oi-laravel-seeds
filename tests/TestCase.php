@@ -4,7 +4,7 @@ namespace OiLab\LaravelSeeds\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use OiLab\LaravelSeeds\LaravelSeedsServiceProvider;
+use OiLab\LaravelSeeds\OiLaravelSeedsServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -19,7 +19,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app): array
     {
         return [
-            LaravelSeedsServiceProvider::class,
+            OiLaravelSeedsServiceProvider::class,
         ];
     }
 

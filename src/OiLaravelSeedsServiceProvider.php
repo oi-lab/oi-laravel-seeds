@@ -7,7 +7,7 @@ use OiLab\LaravelSeeds\Commands\ExportSeedersCommand;
 use OiLab\LaravelSeeds\Commands\ImportSeedersCommand;
 use OiLab\LaravelSeeds\Commands\MakeExportableSeederCommand;
 
-class LaravelSeedsServiceProvider extends ServiceProvider
+class OiLaravelSeedsServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
