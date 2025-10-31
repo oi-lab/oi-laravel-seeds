@@ -1,0 +1,53 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Seeder;
+use OiLab\LaravelSeeds\Traits\ExportableSeeder;
+
+class {{ class }} extends Seeder
+{
+    use ExportableSeeder;
+
+    /**
+     * JSON filename for export/import.
+     */
+    protected string $jsonFilename = {{ jsonFilename }};
+
+    /**
+     * Eloquent model class.
+     */
+    protected string $modelClass = {{ modelClass }};
+
+    /**
+     * Seeder dependencies (must be run before this one).
+     */
+    protected array $dependencies = [];
+
+    /**
+     * Column(s) to use for upsert operations.
+     */
+    protected string $uniqueBy = {{ uniqueBy }};
+
+    /**
+     * Relations to include when exporting (optional).
+     */
+    protected array $exportRelations = [];
+
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $this->importData();
+    }
+
+    /**
+     * Get exportable attributes for a model instance.
+     * Override this method to customize exported attributes.
+     */
+    protected function getExportableAttributes(mixed $model): array
+    {
+        return $model->toArray();
+    }
+}
