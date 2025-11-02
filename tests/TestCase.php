@@ -1,10 +1,9 @@
 <?php
 
-namespace OiLab\LaravelSeeds\Tests;
+namespace OiLab\OiLaravelSeeds\Tests;
 
-use insee\vendor\laravel\framework\src\Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use OiLab\LaravelSeeds\OiLaravelSeedsServiceProvider;
+use OiLab\OiLaravelSeeds\OiLaravelSeedsServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
