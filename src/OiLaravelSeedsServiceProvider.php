@@ -1,11 +1,11 @@
 <?php
 
-namespace OiLab\LaravelSeeds;
+namespace OiLab\OiLaravelSeeds;
 
 use Illuminate\Support\ServiceProvider;
-use OiLab\LaravelSeeds\Commands\ExportSeedersCommand;
-use OiLab\LaravelSeeds\Commands\ImportSeedersCommand;
-use OiLab\LaravelSeeds\Commands\MakeExportableSeederCommand;
+use OiLab\OiLaravelSeeds\Commands\ExportSeedersCommand;
+use OiLab\OiLaravelSeeds\Commands\ImportSeedersCommand;
+use OiLab\OiLaravelSeeds\Commands\MakeExportableSeederCommand;
 
 class OiLaravelSeedsServiceProvider extends ServiceProvider
 {
