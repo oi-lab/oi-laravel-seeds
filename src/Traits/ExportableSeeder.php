@@ -68,7 +68,8 @@ trait ExportableSeeder
         })->toArray();
 
         // Write to JSON file
-        File::put($path, json_encode($exportedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        $jsonOptions = config('oi-seeds.json_options', JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        File::put($path, json_encode($exportedData, $jsonOptions));
 
         return count($exportedData);
     }

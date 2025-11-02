@@ -2,6 +2,8 @@
 
 namespace OiLab\OiLaravelSeeds\Tests;
 
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use OiLab\OiLaravelSeeds\OiLaravelSeedsServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -65,9 +67,8 @@ class TestCase extends Orchestra
     {
         // Clean up test JSON files
         $path = storage_path('app/testing/seeders');
-        if (file_exists($path)) {
-            array_map('unlink', glob("{$path}/*.json"));
-            rmdir($path);
+        if (File::exists($path)) {
+            File::deleteDirectory($path);
         }
 
         parent::tearDown();

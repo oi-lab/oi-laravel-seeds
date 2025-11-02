@@ -59,7 +59,7 @@ namespace Database\Seeders;
 
 use App\Models\Group;
 use Illuminate\Database\Seeder;
-use OiLab\LaravelSeeds\Traits\ExportableSeeder;
+use OiLab\OiLaravelSeeds\Traits\ExportableSeeder;
 
 class GroupSeeder extends Seeder
 {

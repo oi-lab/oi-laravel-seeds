@@ -3,7 +3,7 @@
 namespace {{ namespace }};
 
 use Illuminate\Database\Seeder;
-use OiLab\LaravelSeeds\Traits\ExportableSeeder;
+use OiLab\OiLaravelSeeds\Traits\ExportableSeeder;
 
 class {{ class }} extends Seeder
 {
@@ -27,7 +27,7 @@ class {{ class }} extends Seeder
     /**
      * Column(s) to use for upsert operations.
      */
-    protected string $uniqueBy = {{ uniqueBy }};
+    protected string|array $uniqueBy = {{ uniqueBy }};
 
     /**
      * Relations to include when exporting (optional).

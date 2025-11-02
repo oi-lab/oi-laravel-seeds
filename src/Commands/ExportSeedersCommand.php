@@ -5,7 +5,7 @@ namespace OiLab\OiLaravelSeeds\Commands;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use OiLab\LaravelSeeds\Traits\ExportableSeeder;
+use OiLab\OiLaravelSeeds\Traits\ExportableSeeder;
 use RuntimeException;
 use SplFileInfo;
 

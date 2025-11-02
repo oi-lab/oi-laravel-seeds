@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\File;
-use OiLab\LaravelSeeds\Tests\Fixtures\TestGroup;
-use OiLab\LaravelSeeds\Tests\Fixtures\TestPost;
-use OiLab\LaravelSeeds\Tests\Fixtures\TestUser;
+use OiLab\OiLaravelSeeds\Tests\Fixtures\TestGroup;
+use OiLab\OiLaravelSeeds\Tests\Fixtures\TestPost;
+use OiLab\OiLaravelSeeds\Tests\Fixtures\TestUser;
 
 beforeEach(function () {
     $this->storagePath = storage_path('app/testing/seeders');
