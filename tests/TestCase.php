@@ -2,7 +2,7 @@
 
 namespace OiLab\LaravelSeeds\Tests;
 
-use Illuminate\Database\Schema\Blueprint;
+use insee\vendor\laravel\framework\src\Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use OiLab\LaravelSeeds\OiLaravelSeedsServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;

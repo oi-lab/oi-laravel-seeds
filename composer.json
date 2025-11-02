@@ -32,12 +32,12 @@
     },
     "autoload": {
         "psr-4": {
-            "OiLab\\LaravelSeeds\\": "src/"
+            "OiLab\\OiLaravelSeeds\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "OiLab\\LaravelSeeds\\Tests\\": "tests/"
+            "OiLab\\OiLaravelSeeds\\Tests\\": "tests/"
         }
     },
     "extra": {

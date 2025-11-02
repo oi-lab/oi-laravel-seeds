@@ -1,9 +1,9 @@
 <?php
 
-namespace OiLab\LaravelSeeds\Tests\Fixtures;
+namespace OiLab\OiLaravelSeeds\Tests\Fixtures;
 
 use Illuminate\Database\Seeder;
-use OiLab\LaravelSeeds\Traits\ExportableSeeder;
+use OiLab\OiLaravelSeeds\Traits\ExportableSeeder;
 
 class TestUserSeeder extends Seeder
 {

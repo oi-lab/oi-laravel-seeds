@@ -1,6 +1,6 @@
 <?php
 
-namespace OiLab\LaravelSeeds\Tests\Fixtures;
+namespace OiLab\OiLaravelSeeds\Tests\Fixtures;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;

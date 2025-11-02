@@ -1,6 +1,6 @@
 <?php
 
-namespace OiLab\LaravelSeeds\Traits;
+namespace OiLab\OiLaravelSeeds\Traits;
 
 use Illuminate\Support\Facades\File;
 

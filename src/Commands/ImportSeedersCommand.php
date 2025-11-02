@@ -1,6 +1,6 @@
 <?php
 
-namespace OiLab\LaravelSeeds\Commands;
+namespace OiLab\OiLaravelSeeds\Commands;
 
 use Exception;
 use Illuminate\Console\Command;

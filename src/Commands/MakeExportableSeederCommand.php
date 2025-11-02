@@ -1,6 +1,6 @@
 <?php
 
-namespace OiLab\LaravelSeeds\Commands;
+namespace OiLab\OiLaravelSeeds\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;

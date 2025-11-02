@@ -100,7 +100,7 @@ it('uses correct namespace', function () {
     $content = File::get(database_path('seeders/ProductSeeder.php'));
     expect($content)->toContain('namespace Database\Seeders;');
     expect($content)->toContain('use Illuminate\Database\Seeder;');
-    expect($content)->toContain('use OiLab\LaravelSeeds\Traits\ExportableSeeder;');
+    expect($content)->toContain('use OiLab\OiLaravelSeeds\Traits\ExportableSeeder;');
 });
 
 it('uses default unique-by when not specified', function () {
