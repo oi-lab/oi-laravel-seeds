@@ -5,6 +5,7 @@ namespace OiLab\OiLaravelSeeds;
 use Illuminate\Support\ServiceProvider;
 use OiLab\OiLaravelSeeds\Commands\ExportSeedersCommand;
 use OiLab\OiLaravelSeeds\Commands\ImportSeedersCommand;
+use OiLab\OiLaravelSeeds\Commands\InstallAiSkillCommand;
 use OiLab\OiLaravelSeeds\Commands\MakeExportableSeederCommand;
 
 class OiLaravelSeedsServiceProvider extends ServiceProvider
@@ -41,6 +42,7 @@ class OiLaravelSeedsServiceProvider extends ServiceProvider
                 ExportSeedersCommand::class,
                 ImportSeedersCommand::class,
                 MakeExportableSeederCommand::class,
+                InstallAiSkillCommand::class,
             ]);
         }
     }

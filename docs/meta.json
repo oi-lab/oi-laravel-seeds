@@ -1,0 +1,7 @@
+{
+    "type": "package",
+    "name": "oi-lab/oi-laravel-seeds",
+    "title": "OI Laravel Seeds",
+    "description": "Export and import database seeders to JSON with dependency management",
+    "order": 40
+}

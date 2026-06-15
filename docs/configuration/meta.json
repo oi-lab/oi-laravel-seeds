@@ -1,0 +1,6 @@
+{
+    "type": "section",
+    "title": "Configuration",
+    "description": "Storage path and options",
+    "order": 2
+}

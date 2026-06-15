@@ -1,19 +1,35 @@
+<img src="./assets/github-preview.png" alt="OI Laravel Seeds" width="100%" />
+
 # OI Laravel Seeds
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/oi-lab/oi-laravel-seeds.svg?style=flat-square)](https://packagist.org/packages/oi-lab/oi-laravel-seeds)
-[![Total Downloads](https://img.shields.io/packagist/dt/oi-lab/oi-laravel-seeds.svg?style=flat-square)](https://packagist.org/packages/oi-lab/oi-laravel-seeds)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/oi-lab/oi-laravel-seeds.svg)](https://packagist.org/packages/oi-lab/oi-laravel-seeds)
+[![Total Downloads](https://img.shields.io/packagist/dt/oi-lab/oi-laravel-seeds.svg)](https://packagist.org/packages/oi-lab/oi-laravel-seeds)
+[![Tests](https://img.shields.io/github/actions/workflow/status/oi-lab/oi-laravel-seeds/tests.yml?label=tests)](https://github.com/oi-lab/oi-laravel-seeds/actions)
+[![License](https://img.shields.io/github/license/oi-lab/oi-laravel-seeds)](LICENSE)
 
 A Laravel package to export and import seeders to/from JSON files with intelligent dependency management.
 
 ## Features
 
-- Export database data to JSON files
-- Import JSON files back to database with upsert support
-- Automatic dependency resolution between seeders
-- Support for exporting models with relations
-- Artisan commands for easy management
-- Generator command to create exportable seeders
-- Configurable storage paths and options
+- **JSON Export/Import**: Round-trip database data through portable, version-controllable JSON files
+- **Idempotent Imports**: Rows are upserted by a unique key, so re-running never duplicates data
+- **Dependency Resolution**: Seeders declare dependencies, ordered automatically via topological sort
+- **Relations**: Export models together with their relations using `--with-relations`
+- **Multiple Models**: Export/import several models from a single seeder
+- **Generator Command**: Scaffold exportable seeders with one artisan command
+- **Configurable**: Storage paths, default unique key, auto-discovery, and JSON encoding options
+
+## How It Works
+
+1. **Export**: The package scans your seeders for those using the `ExportableSeeder` trait
+2. **Dependencies**: It resolves dependencies using a topological sort to ensure correct order
+3. **Export Data**: Each seeder exports its model data to a JSON file in the configured storage path
+4. **Import**: When importing, dependencies are processed first, then data is upserted using `updateOrCreate`
+
+## Requirements
+
+- PHP 8.2+
+- Laravel 11.0+ or 12.0+
 
 ## Installation
 
@@ -23,16 +39,35 @@ Install the package via composer:
 composer require oi-lab/oi-laravel-seeds
 ```
 
+The package auto-discovers and registers its service provider — no manual registration required.
+
+### Local Development
+
+For local development inside the monorepo, add a path repository to your main project's `composer.json`:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./packages/oi-lab/oi-laravel-seeds"
+        }
+    ]
+}
+```
+
+### Publish
+
 Publish the configuration file (optional):
 
 ```bash
-php artisan vendor:publish --tag=oi-seeds-config
+php artisan vendor:publish --tag=oi-laravel-seeds-config
 ```
 
-Publish the stubs (optional):
+Publish the seeder stubs (optional):
 
 ```bash
-php artisan vendor:publish --tag=oi-seeds-stubs
+php artisan vendor:publish --tag=oi-laravel-seeds-stubs
 ```
 
 ## Usage
@@ -117,12 +152,6 @@ Export a specific seeder:
 php artisan seed:export --seeder=GroupSeeder
 ```
 
-Export with relations:
-
-```bash
-php artisan seed:export --with-relations
-```
-
 ### Importing Data
 
 Import all exportable seeders:
@@ -162,32 +191,6 @@ protected array $jsonFilename = ['users.json', 'profiles.json'];
 protected array $modelClass = [User::class, Profile::class];
 ```
 
-## Configuration
-
-The configuration file `config/oi-seeds.php` allows you to customize:
-
-- `storage_path`: Base storage path for JSON files (default: `app/private/seeders`)
-- `default_unique_by`: Default column for upsert operations (default: `id`)
-- `auto_discover`: Auto-discover exportable seeders (default: `true`)
-- `json_options`: JSON encoding options (default: `JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE`)
-
-## How it Works
-
-1. **Export**: The package scans all your seeders for those using the `ExportableSeeder` trait
-2. **Dependencies**: It resolves dependencies using topological sort to ensure correct order
-3. **Export Data**: Each seeder exports its model data to a JSON file in the configured storage path
-4. **Import**: When importing, dependencies are processed first, then data is upserted using `updateOrCreate`
-
-## Storage Location
-
-By default, JSON files are stored in `storage/app/private/seeders/`. You can change this in the configuration:
-
-```php
-'storage_path' => env('OI_SEEDS_STORAGE_PATH', 'app/private/seeders'),
-```
-
-## Advanced Usage
-
 ### Custom Unique Keys
 
 Use multiple columns for unique constraints:
@@ -196,17 +199,30 @@ Use multiple columns for unique constraints:
 protected array $uniqueBy = ['email', 'tenant_id'];
 ```
 
-### Conditional Export
+## Configuration
 
-You can add conditions to your export query by overriding the `exportData` method:
+The configuration file `config/oi-laravel-seeds.php` allows you to customize:
+
+- `storage_path`: Base storage path for JSON files (default: `app/private/seeders`)
+- `default_unique_by`: Default column for upsert operations (default: `id`)
+- `auto_discover`: Auto-discover exportable seeders (default: `true`)
+- `json_options`: JSON encoding options (default: `JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE`)
+
+By default, JSON files are stored in `storage/app/private/seeders/`. You can change this:
 
 ```php
-public function exportData(bool $withRelations = false): int
-{
-    // Add custom logic here
-    return parent::exportData($withRelations);
-}
+'storage_path' => env('OI_SEEDS_STORAGE_PATH', 'app/private/seeders'),
 ```
+
+## AI Assistant Skills
+
+Install Claude Code / JetBrains Junie skill files and a `CLAUDE.md` rules section into your app:
+
+```bash
+php artisan oi:skills
+```
+
+See [docs/advanced/skills.md](docs/advanced/skills.md) for details.
 
 ## Testing
 
@@ -218,13 +234,9 @@ composer test
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-## Contributing
+## License
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security
-
-If you discover any security related issues, please email contact@oi-lab.com instead of using the issue tracker.
+The MIT License (MIT). Please see the [License File](LICENSE) for more information.
 
 ## Credits
 
@@ -233,9 +245,10 @@ If you discover any security related issues, please email contact@oi-lab.com ins
 Olivier is a Product & Technology Director based in Montpellier, France, with over 20 years of experience innovating in UX/UI and emerging technologies. He specializes in guiding enterprises toward cutting-edge digital solutions, combining user-centered design with continuous optimization and artificial intelligence integration.
 
 **Projects & Resources:**
+- [OI Dev Docs](https://dev.olacombe.com) - Documentation for all Open Source OI Lab packages
 - [OnAI](https://onai.olacombe.com) - Training courses and masterclasses on generative AI for businesses
 - [Promptr](https://promptr.olacombe.com) - Prompt engineering Management Platform
 
-## License
+## Support
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+For support, please open an issue on the [GitHub repository](https://github.com/oi-lab/oi-laravel-seeds/issues).

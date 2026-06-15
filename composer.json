@@ -2,6 +2,7 @@
     "name": "oi-lab/oi-laravel-seeds",
     "description": "Export and import Laravel seeders to/from JSON files with dependency management",
     "type": "library",
+    "version": "1.0.0",
     "keywords": [
         "laravel",
         "seeder",
@@ -15,7 +16,7 @@
     "authors": [
         {
             "name": "OI Lab",
-            "email": "contact@oi-lab.com"
+            "email": "olivier@olacombe.com"
         }
     ],
     "require": {
@@ -41,9 +42,28 @@
             "providers": [
                 "OiLab\\OiLaravelSeeds\\OiLaravelSeedsServiceProvider"
             ]
+        },
+        "oi-lab": {
+            "skills": [
+                {
+                    "name": "oilab-laravel-seeds",
+                    "description": "Export and import seeders to/from JSON with dependency management",
+                    "path": "resources/stubs/ai-skill.md",
+                    "rules": "resources/stubs/claude-rules.md",
+                    "section": "oi-lab/oi-laravel-seeds rules"
+                }
+            ]
         }
     },
-    "minimum-stability": "dev",
+    "scripts": {
+        "sync-ai-skills": [
+            "@php scripts/sync-ai-skills.php"
+        ],
+        "post-autoload-dump": [
+            "@php scripts/sync-ai-skills.php"
+        ]
+    },
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "config": {
         "sort-packages": true,

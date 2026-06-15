@@ -1,0 +1,6 @@
+{
+    "type": "section",
+    "title": "Usage",
+    "description": "The ExportableSeeder trait",
+    "order": 3
+}

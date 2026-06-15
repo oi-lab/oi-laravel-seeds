@@ -4,10 +4,8 @@ namespace OiLab\OiLaravelSeeds\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
 
-#[AsCommand(name: 'make:exportable-seeder')]
 class MakeExportableSeederCommand extends GeneratorCommand
 {
     /**
@@ -30,7 +28,10 @@ class MakeExportableSeederCommand extends GeneratorCommand
      */
     protected function getStub(): string
     {
-        return __DIR__.'/../../stubs/exportable-seeder.stub';
+        file_put_contents('/tmp/debug_seeder.log', "[" . date('H:i:s') . "] getStub called\n", FILE_APPEND);
+        $stub = __DIR__.'/../../stubs/exportable-seeder.stub';
+        file_put_contents('/tmp/debug_seeder.log', "[" . date('H:i:s') . "] stub path = $stub\n", FILE_APPEND);
+        return $stub;
     }
 
     /**
@@ -56,9 +57,12 @@ class MakeExportableSeederCommand extends GeneratorCommand
      */
     protected function buildClass($name): string
     {
+        file_put_contents('/tmp/debug_seeder.log', "[" . date('H:i:s') . "] buildClass started for $name\n", FILE_APPEND);
         $stub = parent::buildClass($name);
+        file_put_contents('/tmp/debug_seeder.log', "[" . date('H:i:s') . "] parent::buildClass completed\n", FILE_APPEND);
 
         $model = $this->option('model');
+        file_put_contents('/tmp/debug_seeder.log', "[" . date('H:i:s') . "] model option = " . ($model ?? 'null') . "\n", FILE_APPEND);
         $uniqueBy = $this->option('unique-by') ?: 'id';
         $jsonFilename = $this->option('json-filename') ?: Str::snake(Str::plural(class_basename($model ?: $name))).'.json';
 
