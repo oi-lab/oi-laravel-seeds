@@ -2,7 +2,6 @@
     "name": "oi-lab/oi-laravel-seeds",
     "description": "Export and import Laravel seeders to/from JSON files with dependency management",
     "type": "library",
-    "version": "1.0.0",
     "keywords": [
         "laravel",
         "seeder",
