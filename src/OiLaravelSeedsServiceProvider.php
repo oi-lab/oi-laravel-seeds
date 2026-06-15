@@ -16,7 +16,7 @@ class OiLaravelSeedsServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/oi-laravel-seeds.php',
+            __DIR__.'/../config/oi-laravel-seeds.php',
             'oi-laravel-seeds'
         );
     }
@@ -28,7 +28,7 @@ class OiLaravelSeedsServiceProvider extends ServiceProvider
     {
         // Publish configuration
         $this->publishes([
-            __DIR__ . '/../config/oi-laravel-seeds.php' => config_path('oi-laravel-seeds.php'),
+            __DIR__.'/../config/oi-laravel-seeds.php' => config_path('oi-laravel-seeds.php'),
         ], ['config', 'oi-laravel-seeds-config']);
 
         // Publish stubs

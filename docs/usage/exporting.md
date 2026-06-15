@@ -203,4 +203,4 @@ The export command exports records for both models to separate files.
 ## Next Steps
 
 - [Importing Data](./importing.md) — Learn how imports work with the upsert logic
-- [Configuration](../configuration/configuration.md) — Customize JSON output formatting
+- [Configuration](../configuration/_index.md) — Customize JSON output formatting

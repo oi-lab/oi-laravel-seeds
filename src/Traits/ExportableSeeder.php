@@ -68,7 +68,7 @@ trait ExportableSeeder
         })->toArray();
 
         // Write to JSON file
-        $jsonOptions = config('oi-seeds.json_options', JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $jsonOptions = config('oi-laravel-seeds.json_options', JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         File::put($path, json_encode($exportedData, $jsonOptions));
 
         return count($exportedData);
@@ -153,7 +153,7 @@ trait ExportableSeeder
      */
     protected function getStoragePath(string $filename): string
     {
-        $basePath = config('oi-seeds.storage_path', 'app/private/seeders');
+        $basePath = config('oi-laravel-seeds.storage_path', 'app/private/seeders');
 
         return storage_path("{$basePath}/{$filename}");
     }

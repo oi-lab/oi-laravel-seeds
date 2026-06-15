@@ -56,6 +56,6 @@ A single seeder can handle multiple models with separate JSON files for each.
 ## What's Next?
 
 - [Installation](./installation.md) — Get up and running in minutes
-- [Configuration](../configuration/configuration.md) — Configure storage location and defaults
+- [Configuration](../configuration/_index.md) — Configure storage location and defaults
 - [The ExportableSeeder Trait](../usage/_index.md) — Learn the core API
 - [Commands](../commands/make-seeder.md) — Master the Artisan commands

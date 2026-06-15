@@ -4,13 +4,12 @@ namespace OiLab\OiLaravelSeeds\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
-use OiLab\OiLaravelSeeds\Traits\ExportableSeeder;
-use RuntimeException;
-use SplFileInfo;
+use OiLab\OiLaravelSeeds\Traits\DiscoversSeeders;
 
 class ExportSeedersCommand extends Command
 {
+    use DiscoversSeeders;
+
     /**
      * The name and signature of the console command.
      */
@@ -72,122 +71,5 @@ class ExportSeedersCommand extends Command
         $this->components->info("Successfully exported {$totalExported} total record(s)");
 
         return Command::SUCCESS;
-    }
-
-    /**
-     * Get all exportable seeders or a specific one.
-     */
-    protected function getExportableSeeders(?string $specificSeeder): array
-    {
-        $seedersPath = database_path('seeders');
-        $files = File::allFiles($seedersPath);
-        $exportableSeeders = [];
-
-        foreach ($files as $file) {
-            $className = $this->getClassNameFromFile($file);
-
-            if (! $className) {
-                continue;
-            }
-
-            // Skip if specific seeder requested and this isn't it
-            if ($specificSeeder && $this->getSeederName($className) !== $specificSeeder) {
-                continue;
-            }
-
-            // Check if class uses ExportableSeeder trait
-            if (! $this->usesExportableTrait($className)) {
-                continue;
-            }
-
-            $exportableSeeders[] = $className;
-        }
-
-        return $exportableSeeders;
-    }
-
-    /**
-     * Get class name from file.
-     */
-    protected function getClassNameFromFile(SplFileInfo $file): ?string
-    {
-        $relativePath = str_replace(database_path('seeders').'/', '', $file->getPathname());
-        $relativePath = str_replace('.php', '', $relativePath);
-        $className = 'Database\\Seeders\\'.str_replace('/', '\\', $relativePath);
-
-        if (! class_exists($className)) {
-            return null;
-        }
-
-        return $className;
-    }
-
-    /**
-     * Get simple seeder name from full class name.
-     */
-    protected function getSeederName(string $className): string
-    {
-        $parts = explode('\\', $className);
-
-        return end($parts);
-    }
-
-    /**
-     * Check if class uses ExportableSeeder trait.
-     */
-    protected function usesExportableTrait(string $className): bool
-    {
-        $traits = class_uses_recursive($className);
-
-        return in_array(ExportableSeeder::class, $traits);
-    }
-
-    /**
-     * Resolve seeder dependencies using topological sort.
-     */
-    protected function resolveDependencies(array $seeders): array
-    {
-        $resolved = [];
-        $unresolved = [];
-
-        foreach ($seeders as $seeder) {
-            $this->resolveDependency($seeder, $seeders, $resolved, $unresolved);
-        }
-
-        return $resolved;
-    }
-
-    /**
-     * Recursively resolve a single seeder's dependencies.
-     */
-    protected function resolveDependency(string $seeder, array $allSeeders, array &$resolved, array &$unresolved): void
-    {
-        // Skip if already resolved
-        if (in_array($seeder, $resolved)) {
-            return;
-        }
-
-        $unresolved[] = $seeder;
-
-        $instance = new $seeder;
-        $dependencies = $instance->getDependencies();
-
-        foreach ($dependencies as $dependency) {
-            // Only process dependency if it's in our exportable list
-            if (! in_array($dependency, $allSeeders)) {
-                continue;
-            }
-
-            if (! in_array($dependency, $resolved)) {
-                if (in_array($dependency, $unresolved)) {
-                    throw new RuntimeException("Circular dependency detected: {$seeder} -> {$dependency}");
-                }
-
-                $this->resolveDependency($dependency, $allSeeders, $resolved, $unresolved);
-            }
-        }
-
-        $resolved[] = $seeder;
-        $unresolved = array_diff($unresolved, [$seeder]);
     }
 }

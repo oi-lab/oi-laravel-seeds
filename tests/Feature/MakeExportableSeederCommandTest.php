@@ -29,7 +29,7 @@ it('can generate an exportable seeder', function () {
     expect($content)->toContain('use ExportableSeeder;');
     expect($content)->toContain('protected string $jsonFilename');
     expect($content)->toContain('protected string $modelClass');
-    expect($content)->toContain('protected string $uniqueBy');
+    expect($content)->toContain('protected string|array $uniqueBy');
 });
 
 it('can generate seeder with model option', function () {
@@ -37,6 +37,7 @@ it('can generate seeder with model option', function () {
         'name' => 'ProductSeeder',
         '--model' => 'Product',
     ])
+        ->expectsConfirmation('Model [App\Models\Product] does not exist. Do you want to generate it?', 'no')
         ->assertSuccessful();
 
     $content = File::get(database_path('seeders/ProductSeeder.php'));
@@ -73,6 +74,7 @@ it('generates seeder with all options', function () {
         '--unique-by' => 'sku',
         '--json-filename' => 'custom_products.json',
     ])
+        ->expectsConfirmation('Model [App\Models\Product] does not exist. Do you want to generate it?', 'no')
         ->assertSuccessful();
 
     $content = File::get(database_path('seeders/ProductSeeder.php'));
@@ -116,6 +118,7 @@ it('generates valid php syntax', function () {
         'name' => 'ProductSeeder',
         '--model' => 'Product',
     ])
+        ->expectsConfirmation('Model [App\Models\Product] does not exist. Do you want to generate it?', 'no')
         ->assertSuccessful();
 
     $file = database_path('seeders/ProductSeeder.php');

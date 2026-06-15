@@ -18,7 +18,7 @@ it('can export data to json file', function () {
 
     // Export data
     $seeder = new TestGroupSeeder;
-    $seeder->setCommand($this->artisan('list'));
+    $seeder->setCommand(fakeSeederCommand());
     $count = $seeder->exportData();
 
     // Assert
@@ -43,7 +43,7 @@ it('can import data from json file', function () {
 
     // Import data
     $seeder = new TestGroupSeeder;
-    $seeder->setCommand($this->artisan('list'));
+    $seeder->setCommand(fakeSeederCommand());
     $seeder->importData();
 
     // Assert
@@ -67,7 +67,7 @@ it('can upsert data when importing', function () {
 
     // Import data
     $seeder = new TestGroupSeeder;
-    $seeder->setCommand($this->artisan('list'));
+    $seeder->setCommand(fakeSeederCommand());
     $seeder->importData();
 
     // Assert
@@ -83,7 +83,7 @@ it('can export with relations', function () {
 
     // Export data with relations
     $seeder = new TestUserSeeder;
-    $seeder->setCommand($this->artisan('list'));
+    $seeder->setCommand(fakeSeederCommand());
     $count = $seeder->exportData(true);
 
     // Assert
@@ -109,7 +109,7 @@ it('checks if seeder is exportable', function () {
 
 it('handles missing json file gracefully', function () {
     $seeder = new TestGroupSeeder;
-    $seeder->setCommand($this->artisan('list'));
+    $seeder->setCommand(fakeSeederCommand());
     $seeder->importData();
 
     // Should not throw exception
@@ -122,7 +122,7 @@ it('handles invalid json gracefully', function () {
     File::put("{$this->storagePath}/test_groups.json", 'invalid json{]');
 
     $seeder = new TestGroupSeeder;
-    $seeder->setCommand($this->artisan('list'));
+    $seeder->setCommand(fakeSeederCommand());
     $seeder->importData();
 
     // Should not throw exception
@@ -140,7 +140,7 @@ it('skips records without unique keys', function () {
     File::put("{$this->storagePath}/test_groups.json", json_encode($data));
 
     $seeder = new TestGroupSeeder;
-    $seeder->setCommand($this->artisan('list'));
+    $seeder->setCommand(fakeSeederCommand());
     $seeder->importData();
 
     // Assert only valid record imported
@@ -164,7 +164,7 @@ it('can customize exportable attributes', function () {
         }
     };
 
-    $seeder->setCommand($this->artisan('list'));
+    $seeder->setCommand(fakeSeederCommand());
     $seeder->exportData();
 
     // Assert description not exported

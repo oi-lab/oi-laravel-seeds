@@ -35,7 +35,7 @@ class TestCase extends Orchestra
         ]);
 
         // Setup package config
-        $app['config']->set('oi-seeds.storage_path', 'app/testing/seeders');
+        $app['config']->set('oi-laravel-seeds.storage_path', 'app/testing/seeders');
     }
 
     protected function setUpDatabase(): void

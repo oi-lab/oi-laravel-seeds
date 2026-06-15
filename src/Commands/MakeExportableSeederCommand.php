@@ -28,10 +28,7 @@ class MakeExportableSeederCommand extends GeneratorCommand
      */
     protected function getStub(): string
     {
-        file_put_contents('/tmp/debug_seeder.log', "[" . date('H:i:s') . "] getStub called\n", FILE_APPEND);
-        $stub = __DIR__.'/../../stubs/exportable-seeder.stub';
-        file_put_contents('/tmp/debug_seeder.log', "[" . date('H:i:s') . "] stub path = $stub\n", FILE_APPEND);
-        return $stub;
+        return __DIR__.'/../../stubs/exportable-seeder.stub';
     }
 
     /**
@@ -43,13 +40,21 @@ class MakeExportableSeederCommand extends GeneratorCommand
     }
 
     /**
+     * Get the root namespace for the class.
+     */
+    protected function rootNamespace(): string
+    {
+        return 'Database\\Seeders\\';
+    }
+
+    /**
      * Get the destination class path.
      */
     protected function getPath($name): string
     {
-        $name = Str::replaceFirst($this->rootNamespace(), '', $name);
+        $name = str_replace('\\', '/', Str::replaceFirst($this->rootNamespace(), '', $name));
 
-        return database_path('seeders').str_replace('\\', '/', $name).'.php';
+        return database_path('seeders/'.$name.'.php');
     }
 
     /**
@@ -57,12 +62,9 @@ class MakeExportableSeederCommand extends GeneratorCommand
      */
     protected function buildClass($name): string
     {
-        file_put_contents('/tmp/debug_seeder.log', "[" . date('H:i:s') . "] buildClass started for $name\n", FILE_APPEND);
         $stub = parent::buildClass($name);
-        file_put_contents('/tmp/debug_seeder.log', "[" . date('H:i:s') . "] parent::buildClass completed\n", FILE_APPEND);
 
         $model = $this->option('model');
-        file_put_contents('/tmp/debug_seeder.log', "[" . date('H:i:s') . "] model option = " . ($model ?? 'null') . "\n", FILE_APPEND);
         $uniqueBy = $this->option('unique-by') ?: 'id';
         $jsonFilename = $this->option('json-filename') ?: Str::snake(Str::plural(class_basename($model ?: $name))).'.json';
 
@@ -89,7 +91,7 @@ class MakeExportableSeederCommand extends GeneratorCommand
     {
         $modelClass = $this->parseModel($model);
 
-        if (! class_exists($modelClass)) {
+        if (! class_exists($modelClass) && $this->input->isInteractive()) {
             if ($this->confirm("Model [{$modelClass}] does not exist. Do you want to generate it?", true)) {
                 $this->call('make:model', ['name' => $modelClass]);
             }
@@ -110,7 +112,16 @@ class MakeExportableSeederCommand extends GeneratorCommand
             throw new \InvalidArgumentException('Model name contains invalid characters.');
         }
 
-        return $this->qualifyModel($model);
+        $model = ltrim(str_replace('/', '\\', $model), '\\');
+        $rootNamespace = $this->laravel->getNamespace();
+
+        if (Str::startsWith($model, $rootNamespace)) {
+            return $model;
+        }
+
+        return is_dir(app_path('Models'))
+            ? $rootNamespace.'Models\\'.$model
+            : $rootNamespace.$model;
     }
 
     /**

@@ -110,6 +110,6 @@ The JSON file is automatically updated with the current database records.
 
 ## Next Steps
 
-- [Configuration](../configuration/configuration.md) — Learn about available configuration options
+- [Configuration](../configuration/_index.md) — Learn about available configuration options
 - [The ExportableSeeder Trait](../usage/_index.md) — Understand all available trait features
 - [Commands](../commands/make-seeder.md) — Full command reference
